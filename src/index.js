@@ -15,20 +15,30 @@ server.post('/sign-up', (req, res) => {
 
     const {username, avatar} = newUser
 
-    if(!user || !avatar) res.send().statusCode(400)
+    if(!username || !avatar) res.send().statusCode(400)
 
     users.push(newUser)
     res.send('OK')
 })
 
 server.post('/tweets', (req, res) => {
+
     const userTweet = req.body
     if(!userTweet) res.send().statusCode(400)
-    const {username}
+
+    const {username, tweet} = userTweet
+    if(!users.find(e => e.username === username)) res.send("UNAUTHORIZED")
+
+    tweets.push(userTweet)
+    res.send('OK')
 })
 
 server.get('/tweets', (req, res)=>{
-
+    const latestTweets = []
+    for(let i = tweets.length; i > tweets.length - 10; i--){
+        if(!tweets[i]) break
+        latestTweets.push(tweets[i])
+    }
 })
 
 
