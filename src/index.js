@@ -35,10 +35,11 @@ server.post('/tweets', (req, res) => {
 
 server.get('/tweets', (req, res)=>{
     const latestTweets = []
-    for(let i = tweets.length; i > tweets.length - 10; i--){
+    for(let i = tweets.length-1; i > tweets.length - 11; i--){
         if(!tweets[i]) break
-        latestTweets.push(tweets[i])
-    }
+        latestTweets.push({...tweets[i], avatar: users.find(e => e.username === tweets[i].username).avatar})
+    } 
+    res.send(latestTweets).statusCode('OK')
 })
 
 
